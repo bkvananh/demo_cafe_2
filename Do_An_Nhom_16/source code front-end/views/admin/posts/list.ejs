@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Tin Tức</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/header', { page: 'posts' }) %>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <h2>Danh Sách Bài Viết</h2>
+            <a href="/admin/posts/add" class="btn-sm" style="background: var(--primary); color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">+ Viết Bài Mới</a>
+        </div>
+
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Tiêu đề</th>
+                    <th>Loại</th>
+                    <th>Ngày đăng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (posts && posts.length > 0) { %>
+                    <% posts.forEach(post => { %>
+                        <tr>
+                            <td><%= post.id %></td>
+                            <td><img src="<%= post.thumbnail_url %>" style="height: 50px;"></td>
+                            <td><%= post.title %></td>
+                            <td><%= post.type == 'event' ? 'Sự kiện' : 'Khuyến mãi' %></td>
+                            <td><%= new Date(post.publish_date).toLocaleDateString('vi-VN') %></td>
+                            <td>
+                                <a href="/admin/posts/delete/<%= post.id %>" class="btn-delete btn-sm" onclick="return confirm('Xóa bài này?');">Xóa</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr><td colspan="6" class="text-center">Chưa có bài viết nào.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <script src="/js/admin.js"></script> 
+</body>
+</html>

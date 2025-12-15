@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Viết Bài Mới - Catfe Admin</title>
+</head>
+<body>
+    <%- include('../partials/header', { page: 'posts' }) %>
+    <div class="container">
+        <div class="card">
+            <h2 class="mb-2" style="border-bottom: 2px solid var(--primary); padding-bottom: 10px;">
+                <i class="fas fa-pen-nib"></i> Viết Bài Mới
+            </h2>
+            <form action="/admin/posts/store" method="POST">
+                <div class="form-group">
+                    <label class="form-label">Tiêu đề bài viết:</label>
+                    <input type="text" name="title" class="form-control" placeholder="Nhập tiêu đề hấp dẫn..." required>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label class="form-label">Loại tin:</label>
+                        <select name="type" class="form-control">
+                            <option value="event">Sự kiện / Tin tức</option>
+                            <option value="promo">Khuyến mãi / Ưu đãi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hình ảnh (URL):</label>
+                        <input type="text" name="thumbnail_url" class="form-control" placeholder="/img/posts/..." required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Nội dung bài viết (HTML):</label>
+                    <textarea name="content" rows="10" class="form-control" placeholder="Nhập nội dung..."></textarea>
+                    <small style="color: gray;">* Hỗ trợ thẻ HTML cơ bản như &lt;p&gt;, &lt;b&gt;, &lt;img&gt;</small>
+                </div>
+
+                <div class="text-right">
+                    <a href="/admin/posts" class="btn-sm" style="background: #ccc; color: #333; margin-right: 10px;">Hủy</a>
+                    <button type="submit" class="btn-sm btn-primary" style="padding: 10px 30px; font-size: 1rem;">Đăng Bài</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

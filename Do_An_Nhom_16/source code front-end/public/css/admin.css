@@ -1,90 +1,146 @@
-/* Style nền tảng cho Admin */
-body {
-    background-color: #f4f6f9;
-    font-family: 'Montserrat', sans-serif;
+/* ADMIN STYLE - CATFE BRANDING */
+:root {
+    --primary: #283618;   /* Xanh Rêu */
+    --secondary: #606c38; /* Xanh Rêu Nhạt */
+    --accent: #bc6c25;    /* Màu nhấn (Nâu cam) */
+    --bg: #fefae0;        /* Màu kem nền */
+    --white: #ffffff;
+    --text: #283618;
 }
 
-/* Header Admin (Màu tối) */
+body {
+    background-color: var(--bg);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text);
+    margin: 0;
+}
+
+/* Header */
 .admin-header {
-    background-color: #343a40;
-    color: white;
+    background-color: var(--primary);
     padding: 15px 0;
-    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .admin-brand {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #ffd700; /* Vàng kim */
-}
-
-/* Nav Tabs (Menu chính) */
-.admin-nav {
-    display: flex;
-    gap: 5px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--bg);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .admin-nav a {
-    color: #ccc;
-    padding: 8px 15px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 8px 16px;
     border-radius: 4px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.3s;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
 .admin-nav a:hover, .admin-nav a.active {
-    background-color: #495057;
-    color: white;
-    text-decoration: none;
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+/* Container & Cards */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 25px;
+    border: 1px solid #e0e0e0;
 }
 
 /* Tables */
 .table-custom {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     width: 100%;
     border-collapse: collapse;
-}
-
-.table-custom th, .table-custom td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+    margin-top: 15px;
 }
 
 .table-custom th {
-    background-color: #283618; /* Xanh rêu */
-    color: white;
-    text-transform: uppercase;
+    background-color: var(--secondary);
+    color: var(--white);
+    padding: 12px;
+    text-align: left;
+}
+
+.table-custom td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.table-custom tr:hover { background-color: #f9f9f9; }
+
+/* Buttons */
+.btn-sm {
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
     font-size: 0.85rem;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
 }
+.btn-primary { background: var(--primary); color: white; }
+.btn-success { background: #2a9d8f; color: white; }
+.btn-delete { background: #e63946; color: white; }
+.btn-primary:hover, .btn-success:hover { opacity: 0.9; }
 
-.table-custom tr:last-child td { border-bottom: none; }
-
-/* Buttons Action */
-.btn-sm { padding: 5px 10px; font-size: 0.8rem; }
-.btn-edit { background-color: #17a2b8; color: white; border-radius: 4px; margin-right: 5px; }
-.btn-delete { background-color: #dc3545; color: white; border-radius: 4px; }
-
-/* Form Container */
-.form-container {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    max-width: 800px;
-    margin: 0 auto;
-}
-
+/* Forms (Đẹp hơn) */
 .form-group { margin-bottom: 20px; }
-.form-label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+.form-label { display: block; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
 .form-control {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     font-size: 1rem;
+    background: #fafafa;
+}
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 5px rgba(40, 54, 24, 0.2);
+}
+
+/* public/css/admin.css */
+
+/* Căn chỉnh lại Header Admin */
+.admin-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Phần thông tin user và nút thoát */
+.user-info {
+    display: flex;
+    align-items: center; /* Đảm bảo chữ và nút nằm cùng hàng */
+    gap: 15px; /* Khoảng cách giữa tên và nút */
+    white-space: nowrap; /* Không cho xuống dòng */
+}
+
+.user-info span {
+    color: rgba(255,255,255,0.9);
+}
+
+.user-info a {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.user-info a:hover {
+    background: #ff6b6b;
+    color: white !important;
 }

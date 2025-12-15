@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Hộp Thư Liên Hệ</title>
+</head>
+<body>
+    <%- include('../partials/header', { page: 'contacts' }) %>
+
+    <div class="container">
+        <h2 class="mb-2">Khách Hàng Liên Hệ</h2>
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th width="15%">Ngày gửi</th>
+                    <th width="20%">Họ Tên</th>
+                    <th width="20%">Email</th>
+                    <th width="35%">Nội dung</th>
+                    <th width="10%">Hành động</th> </tr>
+            </thead>
+            <tbody>
+                <% if (contacts && contacts.length > 0) { %>
+                    <% contacts.forEach(c => { %>
+                        <tr>
+                            <td><%= new Date(c.created_at).toLocaleString('vi-VN') %></td>
+                            <td><%= c.name %></td>
+                            <td><%= c.email %></td>
+                            <td><%= c.message %></td>
+                            <td>
+                                <a href="/admin/contacts/delete/<%= c.id %>" 
+                                   class="btn-sm btn-delete" 
+                                   onclick="return confirm('Bạn có chắc muốn xóa tin nhắn này?');">
+                                   Xóa
+                                </a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr><td colspan="5" class="text-center">Hộp thư trống.</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="/js/admin.js"></script>
+</body>
+</html>

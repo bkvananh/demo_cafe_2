@@ -3,17 +3,90 @@
 <head>
     <%- include('../partials/head', { title: 'Tin Tức & Sự Kiện' }) %>
     <style>
-        /* Breadcrumb Style */
         .breadcrumb {
             background: transparent;
             padding: 15px 0;
-            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 40px;
             font-size: 0.9rem;
             color: #777;
-            border-bottom: 1px solid #eee;
         }
         .breadcrumb a { color: var(--primary); font-weight: 600; }
-        .breadcrumb span { margin: 0 5px; }
+        
+        /* Layout Tin tức Mới */
+        .news-container {
+            max-width: 900px; /* Đưa ra giữa, giới hạn chiều rộng cho dễ đọc */
+            margin: 0 auto;
+        }
+
+        .news-item {
+            display: flex; /* Dàn ngang ảnh và chữ */
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0; /* Gạch ngang ngăn cách */
+            align-items: flex-start;
+        }
+
+        .news-item:last-child { border-bottom: none; }
+
+        .news-thumb {
+            width: 280px; /* Cố định chiều rộng ảnh */
+            height: 180px;
+            flex-shrink: 0; /* Không cho ảnh bị co lại */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .news-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .news-thumb:hover img { transform: scale(1.05); }
+
+        .news-content {
+            flex-grow: 1;
+            text-align: left; /* Căn lề trái nội dung */
+        }
+
+        .news-meta {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .news-title a { color: var(--text); text-decoration: none; transition: 0.2s; }
+        .news-title a:hover { color: var(--primary); }
+
+        .news-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .news-item { flex-direction: column; }
+            .news-thumb { width: 100%; height: 200px; }
+        }
     </style>
 </head>
 <body>
@@ -24,30 +97,37 @@
             <a href="/">Trang chủ</a> <span>></span> Tin tức
         </div>
 
-        <h1 class="text-center mb-3">Tin Tức Mới Nhất</h1>
+        <h1 class="text-center mb-3" style="margin-bottom: 50px;">Tin Tức & Sự Kiện</h1>
 
-        <div class="news-grid mt-2">
+        <div class="news-container">
             <% if (posts && posts.length > 0) { %>
                 <% posts.forEach(function(post) { %>
-                    <div class="news-card">
-                        <a href="/tin-tuc/<%= post.id %>">
-                            <img src="<%= post.thumbnail_url %>" alt="<%= post.title %>" class="news-img" 
+                    <article class="news-item">
+                        <a href="/tin-tuc/<%= post.id %>" class="news-thumb">
+                            <img src="<%= post.thumbnail_url %>" 
+                                 alt="<%= post.title %>" 
                                  onerror="this.src='/img/placeholder/post-default.jpg'">
                         </a>
-                        <div class="news-body">
-                            <div class="news-date">
+                        <div class="news-content">
+                            <div class="news-meta">
                                 <i class="far fa-calendar-alt"></i> 
                                 <%= new Date(post.publish_date).toLocaleDateString('vi-VN') %>
+                                &nbsp;|&nbsp; 
+                                <span style="color: var(--secondary); font-weight: bold;">
+                                    <%= post.type == 'event' ? 'Sự kiện' : 'Khuyến mãi' %>
+                                </span>
                             </div>
-                            <h3 class="news-title">
+                            <h2 class="news-title">
                                 <a href="/tin-tuc/<%= post.id %>"><%= post.title %></a>
-                            </h3>
-                            <div class="news-excerpt">
-                                Xem chi tiết để biết thêm thông tin về chương trình...
+                            </h2>
+                            <div class="news-desc">
+                                Click để xem chi tiết nội dung bài viết...
                             </div>
-                            <a href="/tin-tuc/<%= post.id %>" class="btn btn-primary mt-1" style="padding: 8px 20px; font-size: 0.8rem;">Xem thêm</a>
+                            <a href="/tin-tuc/<%= post.id %>" class="btn-link" style="color: var(--primary); font-weight: 600;">
+                                Xem chi tiết <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
-                    </div>
+                    </article>
                 <% }); %>
             <% } else { %>
                 <p class="text-center">Chưa có bài viết nào.</p>

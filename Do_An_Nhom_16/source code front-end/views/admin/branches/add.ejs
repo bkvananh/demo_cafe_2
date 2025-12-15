@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Thêm Chi Nhánh - Catfe Admin</title>
+</head>
+<body>
+    <%- include('../partials/header', { page: 'branches' }) %>
+    <div class="container">
+        <div class="card" style="max-width: 700px; margin: 0 auto;">
+            <h2 class="mb-2"><i class="fas fa-store"></i> Thêm Cửa Hàng Mới</h2>
+            <form action="/admin/branches/store" method="POST">
+                <div class="form-group">
+                    <label class="form-label">Tên Chi Nhánh:</label>
+                    <input type="text" name="name" class="form-control" placeholder="VD: Catfe Hà Đông" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Địa chỉ:</label>
+                    <input type="text" name="address" class="form-control" placeholder="Số nhà, đường, phường..." required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label class="form-label">Thành Phố:</label>
+                        <select name="city" class="form-control">
+                            <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Số điện thoại:</label>
+                        <input type="text" name="phone" class="form-control" placeholder="028..." required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Link nhúng Google Map (Iframe src):</label>
+                    <input type="text" name="map_link" class="form-control" placeholder="https://www.google.com/maps/embed?pb=...">
+                    <small>Vào Google Map -> Chia sẻ -> Nhúng bản đồ -> Copy link trong src=""</small>
+                </div>
+
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn-sm btn-primary" style="width: 100%; padding: 12px;">Lưu Chi Nhánh</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

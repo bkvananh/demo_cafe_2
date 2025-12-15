@@ -1,17 +1,14 @@
 <header>
     <div class="container header-inner">
         <a href="/" class="logo">
-            <img src="/img/logo.png" alt="Highlands Coffee Logo">
+            <img src="/img/logo.png" alt="Highlands Logo">
         </a>
 
         <nav>
             <ul>
-                <li><a href="/" class="<%= (typeof currentPath !== 'undefined' && currentPath == '/') ? 'active' : '' %>">Trang chủ</a></li>
-                
+                <li><a href="/">Trang chủ</a></li>
                 <li class="dropdown">
-                    <a href="/thuc-don" class="<%= (typeof currentPath !== 'undefined' && currentPath == '/thuc-don') ? 'active' : '' %>">
-                        Thực đơn <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-left: 5px;"></i>
-                    </a>
+                    <a href="/thuc-don">Thực đơn <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="/thuc-don?cat=1">Cà Phê</a></li>
                         <li><a href="/thuc-don?cat=3">Freeze</a></li>
@@ -19,27 +16,12 @@
                         <li><a href="/thuc-don?cat=4">Bánh Ngọt</a></li>
                     </ul>
                 </li>
-
                 <li><a href="/tin-tuc">Tin tức</a></li>
                 <li><a href="/chi-nhanh">Cửa hàng</a></li>
                 <li><a href="/lien-he">Liên hệ</a></li>
             </ul>
         </nav>
 
-        <div class="header-icons">
-            <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;">
-                <i class="fas fa-search"></i>
-            </a>
-            
-            <% if (user) { %>
-                <a href="/admin/dashboard" class="btn btn-primary" style="padding: 5px 15px; font-size: 0.8rem; border: 1px solid #fff;">
-                    <i class="fas fa-user-cog"></i> Admin
-                </a>
-            <% } else { %>
-                <a href="/admin/login" style="color: white; font-size: 1.2rem;">
-                    <i class="fas fa-user"></i>
-                </a>
-            <% } %>
-        </div>
+        <div class="header-icons" style="width: 0;"></div> 
     </div>
 </header>
