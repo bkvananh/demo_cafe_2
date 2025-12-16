@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <%- include('../partials/head', { title: 'Liên Hệ - Catfe Coffee' }) %>
+    <%- include('../partials/head', { title: 'Liên Hệ - Catfe' }) %>
 </head>
 <body>
     <%- include('../partials/header') %>
 
     <div class="container section-padding">
         <h1 class="text-center mb-3">Liên Hệ Với Chúng Tôi</h1>
-
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === 'true') {
-                document.write('<div style="background:#e8f5e9; color:#2e7d32; padding:15px; margin-bottom:20px; border-radius:4px; text-align:center;">✅ Gửi tin nhắn thành công! Chúng tôi sẽ phản hồi sớm nhất.</div>');
-            }
-        </script>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-            <div>
-                <img src="/img/banners/banner-1.jpg" alt="Catfe Contact" style="width: 100%; border-radius: 8px; margin-bottom: 20px;">
-                <h3>Trụ Sở Chính</h3>
-                <ul style="margin-top: 15px;">
-                    <li class="mb-1"><i class="fas fa-map-marker-alt" style="color: var(--primary); width: 20px;"></i> 97 Man ThiệnHiệp Phú, Thủ Đức, Thành phố Hồ Chí Minh</li>
-                    <li class="mb-1"><i class="fas fa-phone" style="color: var(--primary); width: 20px;"></i> 1900 1755</li>
-                    <li class="mb-1"><i class="fas fa-envelope" style="color: var(--primary); width: 20px;"></i> cskh@catfe.com.vn</li>
+        
+        <div class="row" style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <div class="col-md-6" style="flex: 1; min-width: 300px;">
+                <h3>Thông tin liên lạc</h3>
+                <p>Chúng tôi luôn sẵn sàng lắng nghe bạn.</p>
+                <ul style="list-style: none; padding: 0;">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt"></i> 97 Man Thiện, TP. Thủ Đức, TP.HCM</li>
+                    <li class="mb-2"><i class="fas fa-phone"></i> 028 9999 8888</li>
+                    <li class="mb-2"><i class="fas fa-envelope"></i> cskh@catfe.vn</li>
                 </ul>
             </div>
 
-            <div style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                <form action="/lien-he" method="POST">
-                    <div class="form-group mb-2">
+            <div class="col-md-6" style="flex: 1; min-width: 300px;">
+                <% if (typeof success !== 'undefined' && success) { %>
+                    <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                        Gửi liên hệ thành công! Chúng tôi sẽ phản hồi sớm nhất.
+                    </div>
+                <% } %>
+
+                <form action="/lien-he" method="POST" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                    <div class="form-group mb-3">
                         <label>Họ và Tên:</label>
                         <input type="text" name="name" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                     </div>
-                    <div class="form-group mb-2">
+
+                    <div class="form-group mb-3">
                         <label>Email:</label>
                         <input type="email" name="email" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
                     </div>
-                    <div class="form-group mb-2">
-                        <label>Nội dung tin nhắn:</label>
+
+                    <div class="form-group mb-3">
+                        <label>Nội dung:</label>
                         <textarea name="message" rows="5" class="form-control" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Gửi Liên Hệ</button>
+
+                    <button type="submit" class="btn btn-primary" style="padding: 10px 30px;">Gửi Ngay</button>
                 </form>
             </div>
         </div>
