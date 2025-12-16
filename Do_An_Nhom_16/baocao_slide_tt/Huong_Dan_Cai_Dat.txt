@@ -1,11 +1,11 @@
 HƯỚNG DẪN CÀI ĐẶT CHI TIẾT - ĐỒ ÁN NHÓM 16
-ĐỀ TÀI: CỔNG TRUYỀN THÔNG SỐ CHUỖI CAFE
+ĐỀ TÀI: CỔNG TRUYỀN THÔNG SỐ CHUỖI CAFE CATFE
 ------------------------------------------------------------------
 
-Kính gửi: Giảng viên hướng dẫn.
+Kính gửi: Giảng viên hướng dẫn, thầy Châu Văn Vân.
 
 Để đảm bảo đồ án chạy ổn định và đúng cấu trúc thư mục đã nộp, em xin gửi Thầy hướng dẫn từng bước cụ thể như sau:
-
+------------------------------------------------------------------
 I. YÊU CẦU CẦN CÓ TRƯỚC
 1. Đã cài Node.js (Phiên bản LTS).
 2. Đã cài MySQL Workbench (hoặc XAMPP/WAMP có MySQL).
