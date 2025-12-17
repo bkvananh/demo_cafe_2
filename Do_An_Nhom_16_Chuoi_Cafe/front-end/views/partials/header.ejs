@@ -1,116 +1,168 @@
-<!-- =========================================
-     CLIENT HEADER - FROSTED GLASS NAVIGATION
-     ========================================= -->
 <style>
-    /* Enhanced header visibility */
+    /* 1. Cấu hình Header cơ bản */
     header {
-        background: rgba(30, 40, 20, 0.80) !important;
+        background: rgba(30, 40, 20, 0.85) !important;
         backdrop-filter: blur(20px) saturate(150%) !important;
         -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
         border-bottom: 1px solid rgba(163, 197, 151, 0.25) !important;
+        
         position: sticky !important;
         top: 0 !important;
         z-index: 1000 !important;
         margin: 0 !important;
         padding: 0 !important;
+        
+        /* Chiều cao ban đầu */
+        height: 100px !important;
+        
+        /* Transition mượt mà cho chiều cao và màu nền */
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                    background 0.4s ease, 
+                    box-shadow 0.4s ease !important;
+                    
+        /* Tối ưu hóa render chống rung */
+        transform: translateZ(0);
+        will-change: height, background;
     }
     
+    /* 2. Header khi cuộn (Thu nhỏ lại) */
     header.scrolled {
-        background: rgba(20, 30, 15, 0.90) !important;
-        backdrop-filter: blur(25px) saturate(180%) !important;
+        background: rgba(20, 30, 15, 0.98) !important;
+        height: 70px !important; /* Header bé lại */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important;
     }
     
     .header-inner {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        height: 80px !important;
+        height: 100% !important;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
     }
     
+    /* 3. LOGO STYLE (Trái tim của hiệu ứng) */
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+        text-decoration: none;
+        
+        /* Kích thước khung chứa logo mặc định */
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+        background: transparent; /* Ban đầu không có nền */
+        
+        /* Transition cực mượt cho việc di chuyển và đổi màu nền */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        will-change: transform, height, width, background;
+    }
+
+    .logo img {
+        height: 85px !important; /* Ảnh to rõ */
+        width: auto !important;
+        object-fit: contain;
+        transition: all 0.4s ease !important;
+        filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+    }
+
+    /* 4. TRẠNG THÁI SCROLLED (Logo tràn ra ngoài) */
+    header.scrolled .logo {
+        /* Vẫn giữ kích thước to (90px) trong khi header chỉ còn 70px */
+        height: 90px !important;
+        width: 90px !important;
+        
+        /* Đẩy logo xuống 25px để nó "treo" lơ lửng ra ngoài mép header */
+        transform: translateY(25px) !important;
+        
+        /* Thêm nền và viền để logo nổi bật trên nội dung bên dưới */
+        background: rgba(25, 35, 15, 0.98); 
+        border: 1px solid rgba(163, 197, 151, 0.3);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Bóng đổ 3D */
+    }
+
+    header.scrolled .logo img {
+        height: 65px !important; /* Thu nhỏ ảnh bên trong một chút cho cân đối */
+        filter: none; /* Bỏ bớt glow cho đỡ rối */
+    }
+    
+    /* ... CSS Menu giữ nguyên ... */
     nav ul {
         display: flex !important;
-        gap: 15px !important;
+        gap: 20px !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
-    nav ul li {
-        position: relative !important;
-    }
+    nav ul li { position: relative !important; }
     
     nav ul li a {
         color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        padding: 10px 16px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
     
     nav ul li a:hover,
     nav ul li a.active {
-        color: rgba(163, 197, 151, 0.95) !important;
+        color: #ffffff !important;
+        background: rgba(255,255,255,0.15);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     
-    /* CRITICAL: Hide dropdown by default */
+    /* Dropdown menu */
     .dropdown-menu {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
+        display: block !important;
+        visibility: hidden;
+        opacity: 0;
         position: absolute !important;
-        top: calc(100% + 10px) !important;
-        left: 0 !important;
-        background: rgba(30, 40, 20, 0.90) !important;
+        top: 100% !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(20px) !important;
+        background: rgba(25, 35, 15, 0.95) !important;
         backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(163, 197, 151, 0.25) !important;
-        border-radius: 12px !important;
-        padding: 8px !important;
-        min-width: 200px !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 16px !important;
+        padding: 10px !important;
+        min-width: 220px !important;
         z-index: 1100 !important;
-        transform: translateY(-10px) !important;
-        transition: all 0.3s ease !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
     }
     
-    /* Show dropdown ONLY on hover */
     .dropdown:hover .dropdown-menu {
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: translateY(0) !important;
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(10px) !important;
     }
     
-    .dropdown-menu li {
-        display: block !important;
-        margin: 0 !important;
-    }
-    
-    .dropdown-menu li a {
-        color: rgba(255, 255, 255, 0.85) !important;
-        display: block !important;
-        padding: 12px 16px !important;
-        border-radius: 8px !important;
-    }
-    
-    .dropdown-menu li a:hover {
-        background: rgba(163, 197, 151, 0.2) !important;
-        color: rgba(163, 197, 151, 0.95) !important;
-    }
+    .dropdown-menu li a { border-radius: 8px !important; justify-content: flex-start !important; }
+    .dropdown-menu li a:hover { background: rgba(163, 197, 151, 0.2) !important; color: #a3c597 !important; }
 </style>
 
 <header>
-    <div class="container header-inner">
-        <!-- Logo -->
+    <div class="header-inner">
         <a href="/" class="logo">
-            <img src="/img/logo.png" alt="Catfe Logo" onerror="this.src='https://placehold.co/120x60/FEFAF0/283618?text=CATFE&font=montserrat'">
+            <img src="/img/logo.png" alt="Catfe Logo" onerror="this.src='https://placehold.co/200x200/FEFAF0/283618?text=CATFE&font=montserrat'">
         </a>
 
-        <!-- Main Navigation -->
         <nav>
             <ul>
-                <li>
-                    <a href="/" class="<%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>">
-                        <i class="fas fa-home"></i> Trang chủ
-                    </a>
-                </li>
-                
+                <li><a href="/" class="<%= typeof page !== 'undefined' && page === 'home' ? 'active' : '' %>"><i class="fas fa-home"></i> Trang chủ</a></li>
                 <li class="dropdown">
-                    <a href="/thuc-don" class="<%= typeof page !== 'undefined' && page === 'menu' ? 'active' : '' %>">
-                        <i class="fas fa-utensils"></i> Thực đơn <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
-                    </a>
+                    <a href="/thuc-don" class="<%= typeof page !== 'undefined' && page === 'menu' ? 'active' : '' %>"><i class="fas fa-utensils"></i> Thực đơn <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="/thuc-don?cat=1"><i class="fas fa-mug-hot"></i> Cà Phê</a></li>
                         <li><a href="/thuc-don?cat=3"><i class="fas fa-snowflake"></i> Freeze</a></li>
@@ -118,41 +170,33 @@
                         <li><a href="/thuc-don?cat=4"><i class="fas fa-cookie-bite"></i> Bánh Ngọt</a></li>
                     </ul>
                 </li>
-                
-                <li>
-                    <a href="/tin-tuc" class="<%= typeof page !== 'undefined' && page === 'news' ? 'active' : '' %>">
-                        <i class="fas fa-newspaper"></i> Tin tức
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="/chi-nhanh" class="<%= typeof page !== 'undefined' && page === 'branches' ? 'active' : '' %>">
-                        <i class="fas fa-store"></i> Cửa hàng
-                    </a>
-                </li>
-                
-                <li>
-                    <a href="/lien-he" class="<%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">
-                        <i class="fas fa-envelope"></i> Liên hệ
-                    </a>
-                </li>
+                <li><a href="/tin-tuc" class="<%= typeof page !== 'undefined' && page === 'news' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> Tin tức</a></li>
+                <li><a href="/chi-nhanh" class="<%= typeof page !== 'undefined' && page === 'branches' ? 'active' : '' %>"><i class="fas fa-store"></i> Cửa hàng</a></li>
+                <li><a href="/lien-he" class="<%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>"><i class="fas fa-envelope"></i> Liên hệ</a></li>
             </ul>
         </nav>
 
-        <!-- Right Side Icons (Placeholder for future features) -->
         <div class="header-icons" style="width: 60px;"></div>
     </div>
 </header>
 
-<!-- JavaScript for Header Scroll Effect -->
 <script>
-    // Add 'scrolled' class when user scrolls down
+    // Javascript tối ưu độ trễ (Debounce/Passive)
+    const header = document.querySelector('header');
+    let ticking = false;
+
     window.addEventListener('scroll', function() {
-        const header = document.querySelector('header');
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                // Logic cuộn
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                ticking = false;
+            });
+            ticking = true;
         }
-    });
+    }, { passive: true });
 </script>
