@@ -9,13 +9,17 @@ const homeController = {
             const recentPosts = await Post.getRecent();
 
             res.render('client/index', { 
-                featuredProducts, 
-                recentPosts,
-                title: 'Trang chủ' // Dùng cho <title>
+                // Sử dụng || [] để đảm bảo không bị lỗi nếu DB trả về null
+                featuredProducts: featuredProducts || [], 
+                
+                // QUAN TRỌNG: Tên biến này phải khớp với biến trong file index.ejs (dòng 120)
+                recentPosts: recentPosts || [],
+                
+                title: 'Catfe Coffee - Hương Vị Việt Đích Thực' 
             });
         } catch (err) {
-            console.error(err);
-            res.status(500).send('Lỗi Server');
+            console.error("Lỗi HomeController:", err);
+            res.status(500).send('Lỗi Server: ' + err.message);
         }
     }
 };
