@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <%- include('../partials/head', { title: 'Tin Tức & Sự Kiện - Catfe' }) %>
+    
+    <style>
+        /* Breadcrumb - Glass Style */
+        .breadcrumb {
+            padding: 20px 0;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            
+            /* Glass card */
+            background: rgba(254, 250, 240, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 12px 24px;
+        }
+        
+        .breadcrumb a {
+            color: rgba(40, 54, 24, 0.85);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: rgba(147, 102, 57, 0.9);
+        }
+        
+        .breadcrumb span {
+            color: rgba(40, 54, 24, 0.5);
+            margin: 0 8px;
+        }
+        
+        /* Page Title */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .page-title-section h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        /* News Container - Centered */
+        .news-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* News Item - Horizontal Glass Card */
+        .news-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 24px;
+            align-items: flex-start;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Glass effect */
+            background: rgba(254, 250, 240, 0.1);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .news-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 12px 48px rgba(40, 54, 24, 0.2);
+            border-color: rgba(163, 197, 151, 0.4);
+        }
+        
+        /* News Thumbnail */
+        .news-thumb {
+            width: 300px;
+            height: 200px;
+            flex-shrink: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(40, 54, 24, 0.15);
+        }
+        
+        .news-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(40, 54, 24, 0.2) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .news-item:hover .news-thumb::after {
+            opacity: 1;
+        }
+        
+        .news-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .news-item:hover .news-thumb img {
+            transform: scale(1.1);
+        }
+        
+        /* News Content */
+        .news-content {
+            flex: 1;
+            padding: 10px 0;
+        }
+        
+        /* News Meta - Glass Badge */
+        .news-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: rgba(40, 54, 24, 0.85);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .news-meta i {
+            color: rgba(147, 102, 57, 0.8);
+        }
+        
+        .news-type-badge {
+            padding: 4px 12px;
+            background: rgba(147, 102, 57, 0.2);
+            border-radius: 12px;
+            color: rgba(147, 102, 57, 0.9);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* News Title */
+        .news-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .news-title a {
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .news-title a:hover {
+            color: rgba(40, 54, 24, 0.9);
+        }
+        
+        /* News Description */
+        .news-desc {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        /* Read More Link */
+        .read-more-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(40, 54, 24, 0.85);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(163, 197, 151, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .read-more-link:hover {
+            background: rgba(40, 54, 24, 0.85);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(40, 54, 24, 0.3);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 40px;
+            border-radius: 24px;
+            
+            background: rgba(254, 250, 240, 0.30);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: rgba(40, 54, 24, 0.25);
+            margin-bottom: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .news-item {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .news-thumb {
+                width: 100%;
+                height: 220px;
+            }
+            
+            .news-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <%- include('../partials/header') %>
+
+    <div class="container section-padding">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/"><i class="fas fa-home"></i> Trang chủ</a> 
+            <span>›</span> 
+            <strong>Tin tức</strong>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title-section">
+            <h1><i class="fas fa-newspaper"></i> Tin Tức & Sự Kiện</h1>
+            <p style="color: rgba(255, 255, 255, 0.65); font-size: 1.1rem;">
+                Cập nhật tin tức mới nhất từ Catfe Coffee
+            </p>
+        </div>
+
+        <!-- News Container -->
+        <div class="news-container">
+            <% if (posts && posts.length > 0) { %>
+                <% posts.forEach(function(post) { %>
+                    <article class="news-item">
+                        <!-- Thumbnail -->
+                        <a href="/tin-tuc/<%= post.id %>" class="news-thumb">
+                            <img src="<%= post.thumbnail_url %>" 
+                                 alt="<%= post.title %>" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=600&h=400&fit=crop'">
+                        </a>
+                        
+                        <!-- Content -->
+                        <div class="news-content">
+                            <!-- Meta Information -->
+                            <div class="news-meta">
+                                <span>
+                                    <i class="far fa-calendar-alt"></i> 
+                                    <%= new Date(post.publish_date).toLocaleDateString('vi-VN') %>
+                                </span>
+                                <span class="news-type-badge">
+                                    <%= post.type == 'event' ? '🎉 Sự kiện' : '🎁 Khuyến mãi' %>
+                                </span>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h2 class="news-title">
+                                <a href="/tin-tuc/<%= post.id %>"><%= post.title %></a>
+                            </h2>
+                            
+                            <!-- Description -->
+                            <div class="news-desc">
+                                Khám phá chi tiết bài viết này để cập nhật những thông tin mới nhất và hấp dẫn từ Catfe Coffee...
+                            </div>
+                            
+                            <!-- Read More -->
+                            <a href="/tin-tuc/<%= post.id %>" class="read-more-link">
+                                Đọc tiếp 
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                <% }); %>
+            <% } else { %>
+                <!-- Empty State -->
+                <div class="empty-state">
+                    <i class="fas fa-newspaper"></i>
+                    <h3 style="color: rgba(40, 54, 24, 0.85); margin-bottom: 10px;">
+                        Chưa có bài viết nào
+                    </h3>
+                    <p style="color: rgba(40, 54, 24, 0.65); font-size: 1rem;">
+                        Hãy quay lại sau để cập nhật tin tức mới nhất từ chúng tôi!
+                    </p>
+                    <a href="/" class="btn btn-primary" style="margin-top: 20px;">
+                        <i class="fas fa-home"></i> Về Trang Chủ
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

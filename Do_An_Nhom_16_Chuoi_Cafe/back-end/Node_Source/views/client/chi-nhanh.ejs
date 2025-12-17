@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <%- include('../partials/head', { title: 'Hệ Thống Cửa Hàng - Catfe' }) %>
+    
+    <style>
+        /* Page Title */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title-section h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 10px;
+        }
+        
+        /* Filter Box - Glass Dropdown */
+        .filter-box {
+            margin-bottom: 40px;
+        }
+        
+        .filter-box form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 16px;
+            
+            background: rgba(254, 250, 240, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.12);
+        }
+        
+        .filter-box label {
+            display: block;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .filter-box select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(40, 54, 24, 0.95);
+            
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23283618' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 45px;
+            
+            transition: all 0.3s;
+        }
+        
+        .filter-box select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(163, 197, 151, 0.6);
+            box-shadow: 0 0 0 4px rgba(163, 197, 151, 0.15);
+        }
+        
+        /* Branch Layout - 2 Columns */
+        .branch-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        /* Branch List - Scrollable Glass Container */
+        .branch-list {
+            max-height: 650px;
+            overflow-y: auto;
+            padding-right: 15px;
+            
+            /* Custom scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(40, 54, 24, 0.3) rgba(255, 255, 255, 0.1);
+        }
+        
+        .branch-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .branch-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .branch-list::-webkit-scrollbar-thumb {
+            background: rgba(40, 54, 24, 0.3);
+            border-radius: 10px;
+        }
+        
+        .branch-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(40, 54, 24, 0.5);
+        }
+        
+        /* Branch Item - Glass Card */
+        .branch-item {
+            padding: 24px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(40, 54, 24, 0.10);
+        }
+        
+        .branch-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 30px rgba(40, 54, 24, 0.18);
+            border-color: rgba(163, 197, 151, 0.4);
+        }
+        
+        .branch-item.active {
+            background: rgba(205, 244, 191, 0.8);
+            border-color: rgba(40, 54, 24, 0.6);
+            border-width: 3px;
+            box-shadow: 0 8px 30px rgba(40, 54, 24, 0.25),
+                        inset 0 0 20px rgba(163, 197, 151, 0.3);
+        }
+        
+        .branch-name {
+            color: rgba(40, 54, 24, 0.95);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .branch-addr,
+        .branch-phone {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: rgba(40, 54, 24, 0.75);
+            line-height: 1.5;
+        }
+        
+        .branch-addr i,
+        .branch-phone i {
+            color: rgba(147, 102, 57, 0.8);
+            margin-top: 3px;
+            font-size: 1rem;
+        }
+        
+        .branch-phone {
+            font-weight: 600;
+            color: rgba(147, 102, 57, 0.9);
+        }
+        
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(40, 54, 24, 0.85);
+            background: rgba(163, 197, 151, 0.2);
+            border: 1px solid rgba(163, 197, 151, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .branch-item:hover .btn-link {
+            background: rgba(40, 54, 24, 0.85);
+            color: white;
+        }
+        
+        /* Map Container - Glass Frame */
+        .map-container {
+            position: sticky;
+            top: 100px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(254, 250, 240, 0.2);
+        }
+        
+        .map-static {
+            width: 100%;
+            height: 650px;
+            border: none;
+            display: block;
+        }
+        
+        /* Empty State */
+        .no-branches {
+            text-align: center;
+            padding: 60px 40px;
+            border-radius: 16px;
+            
+            background: rgba(254, 250, 240, 0.30);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .no-branches i {
+            font-size: 4rem;
+            color: rgba(40, 54, 24, 0.25);
+            margin-bottom: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .branch-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                order: -1;
+                position: relative;
+                top: 0;
+                height: 350px;
+                margin-bottom: 30px;
+            }
+            
+            .map-static {
+                height: 350px;
+            }
+            
+            .branch-list {
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <%- include('../partials/header') %>
+
+    <div class="container section-padding">
+        <!-- Page Title -->
+        <div class="page-title-section">
+            <h1><i class="fas fa-store"></i> Hệ Thống Cửa Hàng</h1>
+            <p style="color: rgba(255, 255, 255, 0.65); font-size: 1.1rem;">
+                Khám phá các chi nhánh Catfe gần bạn
+            </p>
+        </div>
+        
+        <!-- City Filter -->
+        <div class="filter-box">
+            <form action="/chi-nhanh" method="GET">
+                <label for="city">
+                    <i class="fas fa-map-marker-alt"></i> Chọn Thành Phố:
+                </label>
+                <select name="city" id="city" onchange="this.form.submit()">
+                    <option value="">-- Tất cả Chi Nhánh --</option>
+                    <option value="Hồ Chí Minh" <%= selectedCity == 'Hồ Chí Minh' ? 'selected' : '' %>>
+                        Hồ Chí Minh
+                    </option>
+                    <option value="Hà Nội" <%= selectedCity == 'Hà Nội' ? 'selected' : '' %>>
+                        Hà Nội
+                    </option>
+                    <option value="Đà Nẵng" <%= selectedCity == 'Đà Nẵng' ? 'selected' : '' %>>
+                        Đà Nẵng
+                    </option>
+                </select>
+            </form>
+        </div>
+
+        <!-- Branch Layout -->
+        <div class="branch-layout">
+            <!-- Branch List -->
+            <div class="branch-list">
+                <% if (branches && branches.length > 0) { %>
+                    <% branches.forEach(function(branch, index) { %>
+                        <div class="branch-item <%= index === 0 ? 'active' : '' %>" 
+                             onclick="changeMap('<%= branch.map_iframe %>', this)">
+                            <h3 class="branch-name">
+                                <i class="fas fa-store"></i>
+                                <%= branch.name %>
+                            </h3>
+                            <p class="branch-addr">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><%= branch.address %>, <%= branch.city %></span>
+                            </p>
+                            <p class="branch-phone">
+                                <i class="fas fa-phone"></i>
+                                <%= branch.phone %>
+                            </p>
+                            <span class="btn-link">
+                                <i class="fas fa-map"></i> Xem bản đồ
+                            </span>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="no-branches">
+                        <i class="fas fa-store-slash"></i>
+                        <h3 style="color: rgba(40, 54, 24, 0.85); margin-bottom: 10px;">
+                            Không tìm thấy cửa hàng
+                        </h3>
+                        <p style="color: rgba(40, 54, 24, 0.65);">
+                            Không có chi nhánh nào tại khu vực này.
+                        </p>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Map Container -->
+            <div class="map-container">
+                <iframe id="google-map"
+                    class="map-static"
+                    src="<%= (branches && branches.length > 0) ? branches[0].map_iframe : '' %>" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+
+    <script>
+        function changeMap(linkMap, element) {
+            // Update iframe source
+            document.getElementById('google-map').src = linkMap;
+
+            // Remove active class from all items
+            const items = document.querySelectorAll('.branch-item');
+            items.forEach(item => item.classList.remove('active'));
+
+            // Add active class to clicked item
+            element.classList.add('active');
+            
+            // Smooth scroll to map on mobile
+            if (window.innerWidth <= 768) {
+                document.querySelector('.map-container').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }
+    </script>
+</body>
+</html>

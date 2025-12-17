@@ -1,0 +1,233 @@
+<link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* CRITICAL: Reset layout */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+    
+    /* Header Fixed Styling */
+    .admin-header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 70px !important; /* Cố định chiều cao để dễ tính toán */
+        z-index: 1000 !important; /* Đủ cao để đè lên mọi thứ */
+        
+        background: rgba(20, 30, 15, 0.9) !important; /* Tăng độ đậm một chút để dễ đọc */
+        backdrop-filter: blur(20px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+        border-bottom: 1px solid rgba(163, 197, 151, 0.2) !important;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+        
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    /* Đẩy nội dung Body xuống để không bị Header che mất */
+    body {
+        padding-top: 70px !important; 
+    }
+    
+    /* Container bên trong Header */
+    .admin-header .container {
+        width: 100% !important;
+        max-width: 1400px !important; /* Giới hạn chiều rộng để đẹp hơn trên màn to */
+        margin: 0 auto !important;
+        padding: 0 20px !important;
+        
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        height: 100% !important;
+    }
+    
+    /* Logo Brand */
+    .admin-brand {
+        color: rgba(255, 255, 255, 0.95) !important;
+        font-size: 1.3rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 1px !important;
+        white-space: nowrap !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .admin-brand i {
+        color: rgba(163, 197, 151, 0.95) !important;
+    }
+    
+    /* Navigation Menu */
+    .admin-nav {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        
+        /* FIX LỖI CẮT NGANG: Thêm padding để chứa cái badge bị trồi lên */
+        padding: 10px 5px !important; 
+        
+        /* Cho phép cuộn ngang nếu màn hình nhỏ, nhưng không cắt badge */
+        overflow-x: auto !important; 
+        scrollbar-width: none !important; /* Ẩn thanh cuộn Firefox */
+    }
+    
+    /* Ẩn thanh cuộn Chrome/Safari */
+    .admin-nav::-webkit-scrollbar {
+        display: none !important;
+    }
+    
+    .admin-nav a {
+        position: relative !important; /* Để định vị badge */
+        color: rgba(255, 255, 255, 0.85) !important;
+        white-space: nowrap !important;
+        padding: 8px 16px !important;
+        border-radius: 50px !important;
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .admin-nav a:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+    }
+    
+    .admin-nav a.active {
+        background: rgba(96, 108, 56, 0.9) !important;
+        color: white !important;
+        box-shadow: 0 4px 15px rgba(96, 108, 56, 0.4) !important;
+    }
+    
+    /* User Info Section */
+    .user-info {
+        display: flex !important;
+        align-items: center !important;
+        gap: 15px !important;
+        margin-left: 20px !important;
+        padding-left: 20px !important;
+        border-left: 1px solid rgba(255,255,255,0.2) !important; /* Đường ngăn cách */
+    }
+    
+    .user-info span {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-size: 0.9rem !important;
+        white-space: nowrap;
+    }
+    
+    .btn-logout {
+        padding: 6px 14px !important;
+        border-radius: 6px !important;
+        background: rgba(220, 53, 69, 0.15) !important;
+        border: 1px solid rgba(220, 53, 69, 0.4) !important;
+        color: #ff8b8b !important;
+        font-size: 0.85rem !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .btn-logout:hover {
+        background: #dc3545 !important;
+        color: white !important;
+        transform: translateY(-1px);
+    }
+    
+    /* FIX LỖI BADGE BỊ CẮT */
+    .badge-notif {
+        position: absolute !important;
+        top: -4px !important;   /* Đẩy lên cao */
+        right: -4px !important; /* Đẩy sang phải */
+        
+        background: #ff4757 !important;
+        color: white !important;
+        font-size: 0.65rem !important;
+        font-weight: bold !important;
+        
+        min-width: 18px !important;
+        height: 18px !important;
+        border-radius: 50% !important;
+        
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        border: 2px solid #2f3640 !important; /* Viền trùng màu nền tối để tạo khoảng cách */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
+        z-index: 10 !important;
+    }
+    
+    /* Responsive Tablet/Mobile */
+    @media (max-width: 992px) {
+        .admin-header { height: auto !important; padding: 10px 0 !important; }
+        .admin-header .container { flex-direction: column !important; gap: 15px !important; }
+        .user-info { border-left: none !important; margin-left: 0 !important; width: 100%; justify-content: space-between; }
+        .admin-nav { width: 100%; justify-content: center; }
+        body { padding-top: 130px !important; } /* Tăng khoảng trống body cho mobile */
+    }
+</style>
+
+<header class="admin-header">
+    <div class="container">
+        <div class="admin-brand">
+            <i class="fas fa-leaf"></i> 
+            CATFE ADMIN
+        </div>
+        
+        <nav class="admin-nav">
+            <a href="/admin/dashboard" class="<%= (typeof page !== 'undefined' && page === 'dashboard') ? 'active' : '' %>">
+                <i class="fas fa-chart-pie"></i> Tổng quan
+            </a>
+            
+            <a href="/admin/products" class="<%= (typeof page !== 'undefined' && page === 'products') ? 'active' : '' %>">
+                <i class="fas fa-coffee"></i> Món ăn
+            </a>
+            
+            <a href="/admin/posts" class="<%= (typeof page !== 'undefined' && page === 'posts') ? 'active' : '' %>">
+                <i class="fas fa-newspaper"></i> Bài viết
+            </a>
+            
+            <a href="/admin/branches" class="<%= (typeof page !== 'undefined' && page === 'branches') ? 'active' : '' %>">
+                <i class="fas fa-map-marked-alt"></i> Chi nhánh
+            </a>
+            
+            <a href="/admin/comments" class="<%= (typeof page !== 'undefined' && page === 'comments') ? 'active' : '' %>">
+                <i class="fas fa-comments"></i> 
+                Bình luận
+                <% if (typeof pendingCount !== 'undefined' && pendingCount > 0) { %>
+                    <span class="badge-notif"><%= pendingCount %></span>
+                <% } %>
+            </a>
+
+            <a href="/admin/contacts" class="<%= (typeof page !== 'undefined' && page === 'contacts') ? 'active' : '' %>">
+                <i class="fas fa-envelope"></i> 
+                Liên hệ
+                <% if (typeof contactCount !== 'undefined' && contactCount > 0) { %>
+                    <span class="badge-notif"><%= contactCount %></span>
+                <% } %>
+            </a>
+        </nav>
+
+        <div class="user-info">
+            <span>Hi, <strong><%= user ? user.full_name : 'Admin' %></strong></span>
+            <a href="/admin/logout" class="btn-logout">
+                <i class="fas fa-power-off"></i> Thoát
+            </a>
+        </div>
+    </div>
+</header>

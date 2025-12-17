@@ -1,0 +1,76 @@
+HƯỚNG DẪN CÀI ĐẶT CHI TIẾT - ĐỒ ÁN NHÓM 16
+ĐỀ TÀI: CỔNG TRUYỀN THÔNG SỐ CHUỖI CAFE CATFE
+------------------------------------------------------------------
+
+Kính gửi: Giảng viên hướng dẫn, thầy Châu Văn Vân.
+
+Để đảm bảo đồ án chạy ổn định và đúng cấu trúc thư mục đã nộp, em xin gửi Thầy hướng dẫn từng bước cụ thể như sau:
+------------------------------------------------------------------
+I. YÊU CẦU CẦN CÓ TRƯỚC
+1. Đã cài Node.js (Phiên bản LTS).
+2. Đã cài MySQL Workbench (hoặc XAMPP/WAMP có MySQL).
+
+------------------------------------------------------------------
+
+II. CÁC BƯỚC CÀI ĐẶT 
+
+► BƯỚC 1: NẠP CƠ SỞ DỮ LIỆU (DATABASE)
+1. Mở phần mềm MySQL Workbench.
+2. Tạo một Schema (Database) mới, đặt tên chính xác là: cafe_db
+3. Chọn Database vừa tạo, tìm mục "Data Import/Restore".
+4. Chọn "Import from Self-Contained File".
+5. Nhấn nút duyệt file (...) và tìm đến file SQL trong gói bài nộp:
+   Đường dẫn: /source code back-end/Database/cafe_db.sql
+6. Nhấn nút "Start Import" để nạp dữ liệu.
+
+► BƯỚC 2: TẠO FILE CẤU HÌNH (.ENV)
+(Bước này để code kết nối được với MySQL trên máy bạn)
+1. Mở thư mục chứa code Backend:
+   Vào thư mục: /source code back-end/Node_Source/
+2. Tại đây, tạo một file mới và đặt tên là: .env
+   (Lưu ý: Chỉ có tên là .env, không có phần tên trước dấu chấm).
+3. Mở file .env bằng Notepad và dán nội dung sau vào:
+
+   PORT=3000
+   SESSION_SECRET=bi_mat_nhom_16
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=      <-- QUAN TRỌNG: Nhập mật khẩu MySQL của bạn vào đây (để trống nếu không có)
+   DB_NAME=cafe_db
+
+4. Lưu file lại (Ctrl + S).
+
+► BƯỚC 3: CÀI ĐẶT THƯ VIỆN & KHỞI ĐỘNG SERVER 
+1. Tại thư mục "/source code back-end/Node_Source/" (nơi chứa file server.js).
+2. Mở cửa sổ dòng lệnh (Terminal/CMD) ngay tại thư mục này.
+   (Cách nhanh: Gõ chữ "cmd" vào thanh địa chỉ thư mục rồi ấn Enter).
+3. Gõ lệnh sau để tải thư viện:
+   npm install
+   (Chờ một chút để nó tải xong thư mục node_modules).
+4. Gõ lệnh sau để BẬT MÁY CHỦ WEB:
+   node server.js
+
+---> Khi màn hình hiện dòng chữ: "Server đang chạy tại: http://localhost:3000"
+---> NGHĨA LÀ THÀNH CÔNG. Vui lòng KHÔNG TẮT cửa sổ đen này trong suốt quá trình chạy trang web.
+
+------------------------------------------------------------------
+
+III. CÁCH TRUY CẬP VÀO WEBSITE
+
+Sau khi đã làm xong Bước 3 và thấy thông báo thành công, mở trình duyệt (Chrome/Edge) và truy cập:
+
+1. TRANG KHÁCH HÀNG (Giao diện chính):
+   - Địa chỉ: http://localhost:3000
+
+2. TRANG QUẢN TRỊ (Admin Dashboard):
+   - Địa chỉ: http://localhost:3000/admin/login
+   - Tài khoản: admin
+   - Mật khẩu:  123456
+
+------------------------------------------------------------------
+
+IV. LƯU Ý KHI CHẤM BÀI
+- Cấu trúc thư mục: Nhóm em giữ nguyên cấu trúc tách biệt (Frontend nằm ngoài, Backend nằm trong) như yêu cầu nộp bài. Code đã được cấu hình đường dẫn tương đối để tự tìm thấy nhau, xin Thầy/Cô vui lòng không di chuyển vị trí các thư mục.
+- Hình ảnh: Ảnh món ăn dùng link online. Nếu mạng yếu, ảnh placeholder (ảnh vẽ) sẽ hiện ra thay thế để không vỡ giao diện.
+
+Em xin chân thành cảm ơn Thầy!

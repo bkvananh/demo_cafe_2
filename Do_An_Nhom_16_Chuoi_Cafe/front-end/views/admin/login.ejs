@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập Admin - Catfe</title>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Full-screen glass login */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            
+            /* Forest background */
+            background: 
+                linear-gradient(
+                    135deg,
+                    rgba(40, 54, 24, 0.85) 0%,
+                    rgba(96, 108, 56, 0.75) 100%
+                ),
+                url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&h=1080&fit=crop') center/cover fixed;
+            
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(163, 197, 151, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(147, 102, 57, 0.1) 0%, transparent 50%);
+            animation: drift 20s ease-in-out infinite;
+        }
+        
+        @keyframes drift {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* Login Container */
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+        }
+        
+        /* Login Box - Frosted Glass */
+        .login-box {
+            padding: 50px 40px;
+            border-radius: 24px;
+            text-align: center;
+            position: relative;
+            
+            /* Dark glass effect */
+            background: rgba(40, 54, 24, 0.30);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+            
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Logo Icon */
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: rgba(163, 197, 151, 0.95);
+            
+            background: rgba(163, 197, 151, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(163, 197, 151, 0.3);
+            box-shadow: 0 8px 25px rgba(163, 197, 151, 0.2);
+        }
+        
+        /* Title */
+        .login-box h2 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .login-subtitle {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.95rem;
+            margin-bottom: 35px;
+        }
+        
+        /* Error Message - Glass Alert */
+        .error-msg {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            
+            background: rgba(230, 57, 70, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 57, 70, 0.4);
+            color: #ffcdd2;
+            font-size: 0.9rem;
+            font-weight: 600;
+            
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .error-msg i {
+            font-size: 1.2rem;
+            color: #ff6b6b;
+        }
+        
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        
+        .form-group label i {
+            color: rgba(163, 197, 151, 0.9);
+            margin-right: 5px;
+        }
+        
+        /* Glass Inputs */
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            
+            /* Glass input */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            
+            transition: all 0.3s ease;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(163, 197, 151, 0.6);
+            box-shadow: 0 0 0 4px rgba(163, 197, 151, 0.15),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Login Button */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            
+            background: linear-gradient(135deg, rgba(163, 197, 151, 0.8) 0%, rgba(96, 108, 56, 0.8) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(163, 197, 151, 0.5);
+            color: white;
+            box-shadow: 0 8px 25px rgba(163, 197, 151, 0.3);
+            
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            background: linear-gradient(135deg, rgba(163, 197, 151, 0.95) 0%, rgba(96, 108, 56, 0.95) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(163, 197, 151, 0.4);
+        }
+        
+        .btn-login:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Footer Link */
+        .login-footer {
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+        
+        .login-footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .login-footer a:hover {
+            color: rgba(163, 197, 151, 0.95);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 40px 30px;
+            }
+            
+            .login-box h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <!-- Logo Icon -->
+            <div class="login-logo">
+                <i class="fas fa-coffee"></i>
+            </div>
+            
+            <!-- Title -->
+            <h2>CATFE ADMIN</h2>
+            <p class="login-subtitle">Quản Trị Hệ Thống</p>
+            
+            <!-- Error Message -->
+            <% if (error) { %>
+                <div class="error-msg">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><%= error %></span>
+                </div>
+            <% } %>
+
+            <!-- Login Form -->
+            <form action="/admin/login" method="POST">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i> Tài khoản
+                    </label>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           class="form-control" 
+                           placeholder="Nhập tên đăng nhập" 
+                           required
+                           autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Mật khẩu
+                    </label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           class="form-control" 
+                           placeholder="Nhập mật khẩu" 
+                           required>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+                </button>
+            </form>
+            
+            <!-- Footer -->
+            <div class="login-footer">
+                <a href="/">
+                    <i class="fas fa-arrow-left"></i> Về trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

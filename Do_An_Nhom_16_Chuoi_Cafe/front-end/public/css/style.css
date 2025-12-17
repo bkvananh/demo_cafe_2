@@ -1,0 +1,621 @@
+/* =========================================
+   CATFE GLASSMORPHISM REDESIGN - CLIENT
+   Theme: Fresh Nature / Cool Glass
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+/* =========================================
+   1. CSS VARIABLES - TRANSLUCENT PALETTE
+   ========================================= */
+:root {
+    /* === GLASS LAYERS === */
+    --glass-light: rgba(254, 250, 240, 0.50);      /* Cream glass - Cards, panels */
+    --glass-medium: rgba(254, 250, 240, 0.50);     /* Cream glass - Headers */
+    --glass-dark: rgba(40, 54, 24, 0.15);          /* Green glass - Accents */
+    
+    /* === ACCENT COLORS === */
+    --accent-green: rgba(40, 54, 24, 0.85);        /* Moss green - Strong text */
+    --accent-green-hover: rgba(40, 54, 24, 0.95);  /* Darker on hover */
+    --accent-brown: rgba(147, 102, 57, 0.85);      /* Brown - Prices */
+    --accent-mint: rgba(163, 197, 151, 0.30);      /* Mint - Fresh highlights */
+    --accent-sage: rgba(127, 167, 116, 0.25);      /* Sage - Gradients */
+    
+    /* === BORDERS & EFFECTS === */
+    --border-glass: rgba(255, 255, 255, 0.18);     /* Frosted edge */
+    --border-shadow: rgba(40, 54, 24, 0.08);       /* Subtle depth */
+    --shadow-glass: 0 8px 32px 0 rgba(40, 54, 24, 0.12);
+    --shadow-hover: 0 12px 40px 0 rgba(40, 54, 24, 0.18);
+    
+    /* === TEXT COLORS === */
+    --text-primary: rgba(40, 54, 24, 0.95);        /* Dark green - High contrast */
+    --text-secondary: rgba(40, 54, 24, 0.65);      /* Muted - Descriptions */
+    --text-on-glass: rgba(255, 255, 255, 0.90);    /* White on dark glass */
+    
+    /* === GRADIENTS === */
+    --bg-gradient: linear-gradient(
+        135deg,
+        rgba(38, 82, 62, 0.36) 0%,    /* Mint top-left */
+        rgba(175, 162, 129, 0.16) 50%,   /* Cream center */
+        rgba(147, 102, 57, 0.12) 100%    /* Brown bottom-right */
+    );
+    
+    /* === BLUR VALUES === */
+    --blur-light: blur(12px);
+    --blur-medium: blur(16px);
+    --blur-heavy: blur(20px);
+    
+    /* === SPACING === */
+    --container-width: 1200px;
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   2. RESET & BASE STYLES
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-primary);
+    
+    /* === BACKGROUND: Forest/Nature Image (Placeholder) === */
+    /* === BACKGROUND: Forest/Nature Image (Local) === */
+    background: 
+        var(--bg-gradient),
+        url('/img/bg/forest-dark.jpg') center/cover fixed;
+    
+    /* Fallback if image fails */
+    background-color: #e8f4e3;
+    
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
+}
+
+/* =========================================
+   3. TYPOGRAPHY
+   ========================================= */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--accent-green);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+h1 { font-size: 2.5rem; font-weight: 800; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-green);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-brown);
+}
+
+ul { list-style: none; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* =========================================
+   4. UTILITY CLASSES
+   ========================================= */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Spacing utilities */
+.mt-1 { margin-top: 10px; }
+.mt-2 { margin-top: 20px; }
+.mt-3 { margin-top: 30px; }
+.mb-1 { margin-bottom: 10px; }
+.mb-2 { margin-bottom: 20px; }
+.mb-3 { margin-bottom: 30px; }
+.section-padding { padding: 60px 0; }
+
+/* =========================================
+   5. GLASSMORPHISM BUTTON SYSTEM
+   ========================================= */
+.btn {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 50px; /* Pill shape */
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: var(--glass-medium);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    border: 1px solid var(--border-glass);
+    color: var(--accent-green);
+    box-shadow: var(--shadow-glass),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-primary:hover {
+    background: rgba(40, 54, 24, 0.25);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    color: var(--accent-green-hover);
+}
+
+.btn-outline-primary {
+    background: rgba(163, 197, 151, 0.25);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(163, 197, 151, 0.8);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(163, 197, 151, 0.3);
+}
+
+.btn-outline-primary:hover {
+    background: rgba(163, 197, 151, 0.85);
+    backdrop-filter: blur(10px);
+    transform: translateY(-2px);
+    color: rgba(20, 30, 15, 0.95);
+    border-color: rgba(163, 197, 151, 1);
+    box-shadow: 0 6px 25px rgba(163, 197, 151, 0.5);
+}
+
+/* =========================================
+   6. HEADER - FROSTED GLASS NAV
+   ========================================= */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
+    /* Glass effect */
+    background: var(--glass-medium);
+    backdrop-filter: var(--blur-medium) saturate(180%);
+    -webkit-backdrop-filter: var(--blur-medium) saturate(180%);
+    
+    /* Border & Shadow */
+    border-bottom: 1px solid var(--border-glass);
+    box-shadow: 0 4px 30px rgba(40, 54, 24, 0.08);
+    
+    transition: var(--transition);
+}
+
+header.scrolled {
+    background: rgba(254, 250, 240, 0.60);
+    backdrop-filter: var(--blur-heavy);
+    box-shadow: 0 8px 40px rgba(40, 54, 24, 0.15);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(40, 54, 24, 0.15));
+    transition: var(--transition);
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+/* Main Navigation */
+nav ul {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: var(--transition);
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background: var(--glass-light);
+    backdrop-filter: var(--blur-light);
+    color: var(--accent-green-hover);
+    box-shadow: 0 4px 15px rgba(40, 54, 24, 0.1);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none; /* HIDDEN by default */
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    min-width: 200px;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    
+    /* Glass effect */
+    background: var(--glass-medium);
+    backdrop-filter: var(--blur-medium);
+    -webkit-backdrop-filter: var(--blur-medium);
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass);
+    
+    z-index: 1100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown-menu li {
+    display: block;
+    margin: 0;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--text-primary);
+    text-transform: none;
+    font-size: 0.9rem;
+}
+
+.dropdown-menu li a:hover {
+    background: rgba(163, 197, 151, 0.2);
+    color: var(--accent-green-hover);
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* =========================================
+   7. PRODUCT CARDS - GLASS DESIGN
+   ========================================= */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+    
+    /* Glass effect */
+    background: var(--glass-light);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.card-img-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(40, 54, 24, 0.1) 100%
+    );
+    pointer-events: none;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .card-img-wrapper img {
+    transform: scale(1.15);
+}
+
+.card-body {
+    padding: 24px;
+    text-align: center;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: rgba(40, 54, 24, 0.95);
+}
+
+.product-price {
+    font-size: 1.1rem;
+    color: var(--accent-brown);
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+}
+
+/* =========================================
+   8. FOOTER - FROSTED GLASS
+   ========================================= */
+footer {
+    margin-top: 80px;
+    padding: 60px 0 20px;
+    
+    /* Glass effect */
+    background: rgba(40, 54, 24, 0.85);
+    backdrop-filter: var(--blur-medium);
+    -webkit-backdrop-filter: var(--blur-medium);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+    
+    color: var(--text-on-glass);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-col h4 {
+    color: rgba(163, 197, 151, 0.95); /* Mint green for titles */
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+}
+
+.footer-col ul li a {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-col ul li a:hover {
+    color: rgba(163, 197, 151, 0.95);
+    padding-left: 8px;
+}
+
+.footer-col ul li i {
+    color: var(--accent-mint);
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================
+   9. FORM CONTROLS - GLASS INPUT
+   ========================================= */
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    
+    /* Glass effect */
+    background: var(--glass-light);
+    backdrop-filter: var(--blur-light);
+    -webkit-backdrop-filter: var(--blur-light);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    background: rgba(254, 250, 240, 0.35);
+    border-color: rgba(163, 197, 151, 0.5);
+    box-shadow: 0 0 0 4px rgba(163, 197, 151, 0.1),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* =========================================
+   10. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    
+    .header-inner {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+        gap: 15px;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    nav ul li a {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .section-padding {
+        padding: 40px 0;
+    }
+}
+
+/* =========================================
+   11. ANIMATIONS & MICRO-INTERACTIONS
+   ========================================= */
+@keyframes floatGlass {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.product-card {
+    animation: floatGlass 6s ease-in-out infinite;
+}
+
+.product-card:nth-child(2n) {
+    animation-delay: 0.5s;
+}
+
+.product-card:nth-child(3n) {
+    animation-delay: 1s;
+}
+
+/* Smooth page transitions */
+body {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* =========================================
+   12. SECTION TITLE STYLES
+   ========================================= */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(163, 197, 151, 0.8) 50%,
+        transparent 100%
+    );
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* =========================================
+   13. ACCESSIBILITY ENHANCEMENTS
+   ========================================= */
+*:focus-visible {
+    outline: 2px solid rgba(163, 197, 151, 0.6);
+    outline-offset: 3px;
+}
+
+/* Reduced motion for users with vestibular disorders */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

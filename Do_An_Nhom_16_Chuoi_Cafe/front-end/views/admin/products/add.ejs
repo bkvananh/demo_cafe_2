@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Món Mới - Catfe Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('../partials/header', { page: 'products' }) %>
+
+    <div class="container">
+        <!-- Back Button & Title -->
+        <div style="margin-bottom: 30px;">
+            <a href="/admin/products" style="display: inline-flex; align-items: center; gap: 8px; 
+                                              color: var(--admin-text-light); text-decoration: none; font-weight: 600; margin-bottom: 15px;">
+                <i class="fas fa-arrow-left"></i> Quay lại danh sách
+            </a>
+            <h2 style="color: var(--admin-text); font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">
+                <i class="fas fa-plus-circle"></i> Thêm Món Mới
+            </h2>
+            <p style="color: var(--admin-text-light); font-size: 0.9rem;">
+                Điền thông tin để tạo sản phẩm mới trong menu
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <form action="/admin/products/store" method="POST">
+                <!-- Product Name -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-tag"></i> Tên Món *
+                    </label>
+                    <input type="text" 
+                           name="name" 
+                           class="form-control" 
+                           placeholder="VD: Phin Sữa Đá Catfe" 
+                           required>
+                </div>
+
+                <!-- Price & Category Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-money-bill-wave"></i> Giá (VNĐ) *
+                        </label>
+                        <input type="number" 
+                               name="price" 
+                               class="form-control" 
+                               placeholder="29000" 
+                               min="0"
+                               step="1000"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-list"></i> Danh Mục *
+                        </label>
+                        <select name="category_id" class="form-control" required>
+                            <option value="">-- Chọn danh mục --</option>
+                            <option value="1">☕ Cà Phê</option>
+                            <option value="2">🍵 Trà</option>
+                            <option value="3">🧊 Freeze</option>
+                            <option value="4">🍰 Bánh Ngọt</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Image URL -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-image"></i> Link Ảnh (URL) *
+                    </label>
+                    <input type="text" 
+                           name="image_url" 
+                           class="form-control" 
+                           placeholder="https://example.com/image.jpg hoặc /img/products/..." 
+                           required>
+                    <small style="color: var(--admin-text-light); font-size: 0.85rem; display: block; margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> 
+                        Copy link ảnh từ internet hoặc dùng ảnh có sẵn trong thư mục /img/products/
+                    </small>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-align-left"></i> Mô tả sản phẩm
+                    </label>
+                    <textarea name="description" 
+                              class="form-control" 
+                              rows="4"
+                              placeholder="Mô tả chi tiết về món ăn (không bắt buộc)..."></textarea>
+                </div>
+
+                <!-- Featured Checkbox -->
+                <div class="form-group">
+                    <div style="padding: 15px; background: rgba(42, 157, 143, 0.1); border-radius: 12px; 
+                                border: 1px solid rgba(42, 157, 143, 0.2);">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--admin-text);">
+                            <input type="checkbox" 
+                                   name="is_featured" 
+                                   value="1"
+                                   style="width: 18px; height: 18px; cursor: pointer;">
+                            <span style="font-weight: 600;">
+                                <i class="fas fa-star" style="color: #ffa726;"></i>
+                                Đặt làm món nổi bật (Hiển thị trên trang chủ)
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 30px; padding-top: 30px; 
+                            border-top: 1px solid rgba(40, 54, 24, 0.1);">
+                    <a href="/admin/products" 
+                       style="padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;
+                              background: rgba(120, 120, 120, 0.2); color: var(--admin-text); 
+                              border: 1px solid rgba(120, 120, 120, 0.3); transition: all 0.3s;">
+                        <i class="fas fa-times"></i> Hủy bỏ
+                    </a>
+                    <button type="submit" class="btn-sm btn-primary" style="padding: 12px 40px;">
+                        <i class="fas fa-save"></i> Lưu Món
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

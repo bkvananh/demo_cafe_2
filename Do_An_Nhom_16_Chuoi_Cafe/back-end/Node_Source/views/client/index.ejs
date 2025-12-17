@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <%- include('../partials/head', { title: 'Catfe Coffee - Hương Vị Việt Đích Thực' }) %>
+    
+    <style>
+        /* Hero Slider - Glassmorphism Overlay */
+        .swiper {
+            width: 100%;
+            height: 600px;
+            position: relative;
+        }
+        
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Glass overlay on slider */
+        .swiper-slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(40, 54, 24, 0.2) 0%,
+                rgba(40, 54, 24, 0.6) 100%
+            );
+            pointer-events: none;
+        }
+        
+        /* Hero Text Overlay */
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            
+            /* Frosted glass card */
+            background: rgba(254, 250, 240, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+        }
+        
+        .hero-text h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            letter-spacing: -1px;
+        }
+        
+        .hero-text p {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Custom Swiper Navigation Buttons */
+        .swiper-button-next,
+        .swiper-button-prev {
+            background: rgba(254, 250, 240, 0.25);
+            backdrop-filter: blur(10px);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .swiper-pagination-bullet {
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 1;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: rgba(163, 197, 151, 0.9);
+            width: 30px;
+            border-radius: 5px;
+        }
+        
+        /* News Section - Different Background */
+        .news-section {
+            position: relative;
+            padding: 80px 0;
+            
+            /* Subtle gradient overlay */
+            background: linear-gradient(
+                135deg,
+                rgba(163, 197, 151, 0.08) 0%,
+                rgba(254, 250, 240, 0.15) 50%,
+                rgba(147, 102, 57, 0.06) 100%
+            );
+        }
+        
+        /* News Cards - Glass Design */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Glass effect */
+            background: rgba(254, 250, 240, 0.5);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .news-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 48px rgba(40, 54, 24, 0.2);
+            border-color: rgba(163, 197, 151, 0.4);
+        }
+        
+        .news-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .news-card:hover .news-img {
+            transform: scale(1.1);
+        }
+        
+        .news-body {
+            padding: 24px;
+        }
+        
+        .news-date {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(163, 197, 151, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: rgba(40, 54, 24, 0.85);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .news-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: rgba(40, 54, 24, 0.95);
+            line-height: 1.4;
+        }
+        
+        .news-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .news-title a:hover {
+            color: rgba(147, 102, 57, 0.9);
+        }
+        
+        .news-excerpt {
+            font-size: 0.9rem;
+            color: rgba(40, 54, 24, 0.65);
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .swiper { height: 400px; }
+            .hero-text { padding: 30px 25px; }
+            .hero-text h1 { font-size: 2rem; }
+            .hero-text p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <%- include('../partials/header') %>
+
+    <!-- Hero Slider with Glass Overlay -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/img/banners/banner-1.jpg" alt="Catfe Banner 1" 
+                     onerror="this.src='https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1920&h=600&fit=crop'">
+            </div>
+            <div class="swiper-slide">
+                <img src="/img/banners/banner-2.jpg" alt="Catfe Banner 2" 
+                     onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1920&h=600&fit=crop'">
+            </div>
+            <div class="swiper-slide">
+                <img src="/img/banners/banner-3.jpg" alt="Catfe Banner 3" 
+                     onerror="this.src='https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1920&h=600&fit=crop'">
+            </div>
+        </div>
+        
+        <!-- Hero Text Overlay -->
+        <div class="hero-text">
+            <h1>Chào Mừng Đến Catfe</h1>
+            <p>Khám phá hương vị cà phê Việt Nam đích thực từ những hạt cà phê cao nguyên</p>
+            <a href="/thuc-don" class="btn btn-primary" style="font-size: 1.1rem; padding: 14px 40px;">
+                <i class="fas fa-utensils"></i> Khám Phá Menu
+            </a>
+        </div>
+        
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Featured Products Section -->
+    <section class="section-padding container">
+        <h2 class="section-title">Món Ngon Phải Thử</h2>
+        
+        <div class="product-grid">
+            <% if (featuredProducts && featuredProducts.length > 0) { %>
+                <% featuredProducts.forEach(function(item) { %>
+                    <div class="product-card">
+                        <div class="card-img-wrapper">
+                            <img src="<%= item.image_url %>" 
+                                 alt="<%= item.name %>" 
+                                 onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=300&fit=crop'">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="product-title"><%= item.name %></h3>
+                            <p class="product-price"><%= item.price.toLocaleString('vi-VN') %> đ</p>
+                            <a href="/thuc-don" class="btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i> Đặt Ngay
+                            </a>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="text-center" style="grid-column: 1 / -1; padding: 60px 20px;">
+                    <div style="background: rgba(254, 250, 240, 0.3); backdrop-filter: blur(12px); 
+                                border-radius: 20px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                        <i class="fas fa-coffee fa-4x" style="color: rgba(40, 54, 24, 0.3); margin-bottom: 20px;"></i>
+                        <h3 style="color: rgba(40, 54, 24, 0.85);">Đang cập nhật món mới...</h3>
+                        <p style="color: rgba(40, 54, 24, 0.65);">Vui lòng quay lại sau nhé!</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        
+        <div class="text-center mt-3">
+            <a href="/thuc-don" class="btn btn-outline-primary" style="padding: 12px 40px; font-size: 1rem;">
+                <i class="fas fa-arrow-right"></i> Xem Toàn Bộ Menu
+            </a>
+        </div>
+    </section>
+
+    <!-- News Section with Different Background -->
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title">Tin Tức & Sự Kiện</h2>
+            
+            <div class="news-grid">
+                <% if (recentPosts && recentPosts.length > 0) { %>
+                    <% recentPosts.forEach(function(post) { %>
+                        <article class="news-card">
+                            <a href="/tin-tuc/<%= post.id %>">
+                                <img src="<%= post.thumbnail_url %>" 
+                                     alt="<%= post.title %>" 
+                                     class="news-img" 
+                                     onerror="this.src='https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=600&h=400&fit=crop'">
+                            </a>
+                            <div class="news-body">
+                                <div class="news-date">
+                                    <i class="far fa-calendar-alt"></i> 
+                                    <%= new Date(post.publish_date).toLocaleDateString('vi-VN') %>
+                                </div>
+                                <h3 class="news-title">
+                                    <a href="/tin-tuc/<%= post.id %>"><%= post.title %></a>
+                                </h3>
+                                <div class="news-excerpt">
+                                    Click để khám phá chi tiết bài viết đầy hấp dẫn này...
+                                </div>
+                                <a href="/tin-tuc/<%= post.id %>" 
+                                   style="display: inline-flex; align-items: center; gap: 8px; 
+                                          margin-top: 15px; color: rgba(40, 54, 24, 0.85); 
+                                          font-weight: 600; font-size: 0.9rem; text-decoration: none;">
+                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    <% }); %>
+                <% } else { %>
+                    <div class="text-center" style="grid-column: 1 / -1; padding: 60px 20px;">
+                        <div style="background: rgba(254, 250, 240, 0.3); backdrop-filter: blur(12px); 
+                                    border-radius: 20px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                            <i class="fas fa-newspaper fa-4x" style="color: rgba(40, 54, 24, 0.3); margin-bottom: 20px;"></i>
+                            <h3 style="color: rgba(40, 54, 24, 0.85);">Chưa có tin tức nào</h3>
+                            <p style="color: rgba(40, 54, 24, 0.65);">Hãy quay lại sau để cập nhật tin mới nhất!</p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="/tin-tuc" class="btn btn-outline-primary" style="padding: 12px 40px; font-size: 1rem;">
+                    <i class="fas fa-newspaper"></i> Xem Tất Cả Tin Tức
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <%- include('../partials/footer') %>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 0,
+            centeredSlides: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            loop: true,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+    </script>
+</body>
+</html>

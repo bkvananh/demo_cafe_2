@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <%- include('../partials/head', { title: 'Liên Hệ - Catfe' }) %>
+    
+    <style>
+        /* Page Title */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .page-title-section h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 15px;
+        }
+        
+        .page-title-section p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.65);
+        }
+        
+        /* Contact Grid - 2 Columns */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        /* Info Card - Glass */
+        .contact-info-card {
+            padding: 40px;
+            border-radius: 24px;
+            
+            background: rgba(254, 250, 240, 0.30);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .contact-info-card h3 {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .contact-info-card > p {
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        
+        /* Info List */
+        .contact-info-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contact-info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(163, 197, 151, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(163, 197, 151, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .contact-info-list li:hover {
+            background: rgba(163, 197, 151, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .contact-info-list li i {
+            color: rgba(147, 102, 57, 0.9);
+            font-size: 1.3rem;
+            margin-top: 2px;
+        }
+        
+        .contact-info-list li span {
+            color: rgba(40, 54, 24, 0.85);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Form Card - Glass */
+        .contact-form-card {
+            padding: 40px;
+            border-radius: 24px;
+            
+            background: rgba(254, 250, 240, 0.50);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(40, 54, 24, 0.12),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Success Alert - Glass */
+        .alert-success {
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            
+            background: rgba(42, 157, 143, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(42, 157, 143, 0.3);
+            color: #155724;
+            
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            
+            animation: slideDown 0.4s ease;
+        }
+        
+        .alert-success i {
+            font-size: 1.5rem;
+            color: #2a9d8f;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            color: rgba(40, 54, 24, 0.95);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            
+            /* Glass input effect */
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(40, 54, 24, 0.95);
+            
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(40, 54, 24, 0.5);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(163, 197, 151, 0.6);
+            box-shadow: 0 0 0 4px rgba(163, 197, 151, 0.15),
+                        inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <%- include('../partials/header') %>
+
+    <div class="container section-padding">
+        <!-- Page Title -->
+        <div class="page-title-section">
+            <h1><i class="fas fa-envelope"></i> Liên Hệ Với Chúng Tôi</h1>
+            <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+        </div>
+        
+        <!-- Contact Grid -->
+        <div class="contact-grid">
+            <!-- Left: Contact Info -->
+            <div class="contact-info-card">
+                <h3>
+                    <i class="fas fa-info-circle"></i>
+                    Thông tin liên lạc
+                </h3>
+                <p>
+                    Đừng ngần ngại liên hệ với chúng tôi. 
+                    Đội ngũ Catfe luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của bạn.
+                </p>
+                
+                <ul class="contact-info-list">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>
+                            <strong>Địa chỉ:</strong><br>
+                            97 Man Thiện, Hiệp Phú,<br>
+                            Thủ Đức, TP.HCM
+                        </span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <span>
+                            <strong>Điện thoại:</strong><br>
+                            <a href="tel:02899998888" style="color: rgba(147, 102, 57, 0.9); font-weight: 600;">
+                                028 9999 8888
+                            </a>
+                        </span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:cskh@catfe.vn" style="color: rgba(147, 102, 57, 0.9); font-weight: 600;">
+                                cskh@catfe.vn
+                            </a>
+                        </span>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <span>
+                            <strong>Giờ làm việc:</strong><br>
+                            Thứ 2 - Chủ Nhật: 6:00 - 23:00
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right: Contact Form -->
+            <div class="contact-form-card">
+                <!-- Success Message -->
+                <% if (typeof success !== 'undefined' && success) { %>
+                    <div class="alert-success">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Gửi thành công!</strong><br>
+                            Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm nhất.
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Form -->
+                <form action="/lien-he" method="POST">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i> Họ và Tên *
+                        </label>
+                        <input type="text" 
+                               id="name"
+                               name="name" 
+                               placeholder="Nhập họ tên của bạn" 
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i> Email *
+                        </label>
+                        <input type="email" 
+                               id="email"
+                               name="email" 
+                               placeholder="example@email.com" 
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            <i class="fas fa-comment-dots"></i> Nội dung *
+                        </label>
+                        <textarea id="message"
+                                  name="message" 
+                                  placeholder="Hãy cho chúng tôi biết bạn cần hỗ trợ gì..." 
+                                  required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane"></i> Gửi Tin Nhắn
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

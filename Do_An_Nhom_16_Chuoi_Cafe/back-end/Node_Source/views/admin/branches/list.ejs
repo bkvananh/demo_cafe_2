@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Chi Nhánh - Catfe Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('../partials/header', { page: 'branches' }) %>
+
+    <div class="container">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h2 style="color: var(--admin-text); font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">
+                    <i class="fas fa-store"></i> Danh Sách Cửa Hàng
+                </h2>
+                <p style="color: var(--admin-text-light); font-size: 0.9rem;">
+                    Quản lý hệ thống chi nhánh trên toàn quốc
+                </p>
+            </div>
+            <a href="/admin/branches/add" class="btn-sm btn-primary" style="padding: 12px 24px; text-decoration: none;">
+                <i class="fas fa-plus"></i> Thêm Chi Nhánh
+            </a>
+        </div>
+
+        <!-- Branches Table Card -->
+        <div class="card">
+            <% if (branches && branches.length > 0) { %>
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>Tên Chi Nhánh</th>
+                            <th>Địa chỉ</th>
+                            <th style="width: 120px;">Thành phố</th>
+                            <th style="width: 140px;">Số điện thoại</th>
+                            <th style="width: 100px;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% branches.forEach(b => { %>
+                            <tr>
+                                <!-- Branch Name -->
+                                <td>
+                                    <span style="font-weight: 700; color: var(--admin-text); display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-store" style="color: rgba(42, 157, 143, 0.8);"></i>
+                                        <%= b.name %>
+                                    </span>
+                                </td>
+                                
+                                <!-- Address -->
+                                <td>
+                                    <span style="color: var(--admin-text-light); font-size: 0.9rem;">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <%= b.address %>
+                                    </span>
+                                </td>
+                                
+                                <!-- City Badge -->
+                                <td>
+                                    <% 
+                                    let cityColors = {
+                                        'Hồ Chí Minh': { bg: 'rgba(244, 162, 97, 0.2)', color: '#f4a261' },
+                                        'Hà Nội': { bg: 'rgba(42, 157, 143, 0.2)', color: '#2a9d8f' },
+                                        'Đà Nẵng': { bg: 'rgba(100, 181, 246, 0.2)', color: '#64b5f6' }
+                                    };
+                                    let cityStyle = cityColors[b.city] || { bg: 'rgba(120, 120, 120, 0.2)', color: '#888' };
+                                    %>
+                                    <span style="display: inline-block; padding: 6px 12px; border-radius: 20px; 
+                                                 font-size: 0.85rem; font-weight: 600;
+                                                 background: <%= cityStyle.bg %>; color: <%= cityStyle.color %>;">
+                                        <%= b.city %>
+                                    </span>
+                                </td>
+                                
+                                <!-- Phone -->
+                                <td>
+                                    <span style="color: rgba(147, 102, 57, 0.9); font-weight: 600; font-size: 0.9rem;">
+                                        <i class="fas fa-phone"></i>
+                                        <%= b.phone %>
+                                    </span>
+                                </td>
+                                
+                                <!-- Actions -->
+                                <td>
+                                    <a href="/admin/branches/delete/<%= b.id %>" 
+                                       class="btn-delete btn-sm" 
+                                       onclick="return confirm('⚠️ Xóa chi nhánh <%= b.name %>?');"
+                                       style="padding: 8px 14px;">
+                                        <i class="fas fa-trash"></i> Xóa
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <!-- Empty State -->
+                <div style="text-align: center; padding: 80px 40px;">
+                    <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%;
+                                display: flex; align-items: center; justify-content: center;
+                                background: rgba(40, 54, 24, 0.1);">
+                        <i class="fas fa-store-slash" style="font-size: 3rem; color: rgba(40, 54, 24, 0.3);"></i>
+                    </div>
+                    <h3 style="color: var(--admin-text); margin-bottom: 10px;">Chưa có chi nhánh nào</h3>
+                    <p style="color: var(--admin-text-light); margin-bottom: 25px;">
+                        Hãy thêm cửa hàng đầu tiên của bạn!
+                    </p>
+                    <a href="/admin/branches/add" class="btn-sm btn-primary" style="padding: 12px 30px; text-decoration: none;">
+                        <i class="fas fa-plus"></i> Thêm Chi Nhánh
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

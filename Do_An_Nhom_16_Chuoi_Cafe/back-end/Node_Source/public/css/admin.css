@@ -1,0 +1,642 @@
+/* =========================================
+   CATFE GLASSMORPHISM REDESIGN - ADMIN
+   Professional Dashboard with Glass Effect
+   ========================================= */
+
+:root {
+    /* === ADMIN GLASS PALETTE === */
+    --admin-glass-dark: rgba(40, 54, 24, 0.85);    /* Dark green glass - Header */
+    --admin-glass-light: rgba(254, 250, 240, 0.30); /* Light glass - Cards */
+    --admin-glass-medium: rgba(254, 250, 240, 0.50); /* Medium glass - Tables */
+    
+    /* === ACCENT COLORS === */
+    --admin-primary: rgba(40, 54, 24, 0.95);       /* Dark green - Strong */
+    --admin-secondary: rgba(96, 108, 56, 0.90);    /* Lighter green */
+    --admin-accent: rgba(188, 108, 37, 0.90);      /* Orange-brown */
+    
+    /* === STATUS COLORS === */
+    --success-glass: rgba(42, 157, 143, 0.25);     /* Green success */
+    --warning-glass: rgba(230, 126, 34, 0.25);     /* Orange warning */
+    --danger-glass: rgba(230, 57, 70, 0.25);       /* Red danger */
+    
+    /* === BORDERS & EFFECTS === */
+    --admin-border: rgba(255, 255, 255, 0.15);
+    --admin-shadow: 0 4px 20px rgba(40, 54, 24, 0.15);
+    --admin-shadow-hover: 0 8px 30px rgba(40, 54, 24, 0.25);
+    
+    /* === TEXT === */
+    --admin-text: rgba(40, 54, 24, 0.95);
+    --admin-text-light: rgba(40, 54, 24, 0.65);
+    --admin-text-white: rgba(255, 255, 255, 0.95);
+    
+    /* === BLUR === */
+    --admin-blur: blur(16px);
+    --admin-blur-heavy: blur(20px);
+}
+
+/* =========================================
+   1. BASE STYLES
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    /* Darker admin background */
+    background: 
+        linear-gradient(
+            135deg,
+            rgba(248, 224, 192, 0.77) 0%,
+            rgba(249, 225, 203, 0.7) 50%,
+            rgba(255, 255, 255, 0.3) 100%
+        ),
+        url('/img/bg/admin-dark.jpg') center/cover fixed;
+    
+    background-color: #12190f; /* Darker fallback */
+    color: var(--admin-text);
+    min-height: 100vh;
+}
+
+/* =========================================
+   2. ADMIN HEADER - FROSTED GLASS NAV
+   ========================================= */
+.admin-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    
+    /* Dark frosted glass */
+    background: var(--admin-glass-dark);
+    backdrop-filter: var(--admin-blur) saturate(150%);
+    -webkit-backdrop-filter: var(--admin-blur) saturate(150%);
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.admin-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 30px;
+}
+
+/* Brand Logo */
+.admin-brand {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--admin-text-white);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.admin-brand i {
+    color: rgba(163, 197, 151, 0.95); /* Mint green icon */
+}
+
+/* Navigation Menu */
+.admin-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+}
+
+.admin-nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 50px;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.admin-nav a:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+}
+
+.admin-nav a.active {
+    background: var(--admin-secondary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(96, 108, 56, 0.4);
+}
+
+/* Notification Badge */
+.badge-notif {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: linear-gradient(135deg, #ff3b30 0%, #ff6b6b 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid var(--admin-glass-dark);
+    box-shadow: 0 2px 8px rgba(255, 59, 48, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* User Info Section */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info span {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+}
+
+.user-info strong {
+    color: rgba(163, 197, 151, 0.95); /* Mint green */
+    font-weight: 700;
+}
+
+.btn-logout {
+    padding: 8px 16px;
+    border-radius: 50px;
+    background: rgba(220, 53, 69, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #ff6b6b !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-logout:hover {
+    background: #dc3545;
+    color: white !important;
+    border-color: #dc3545;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+/* =========================================
+   3. CONTAINER & LAYOUT
+   ========================================= */
+.container {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* =========================================
+   4. GLASS CARDS
+   ========================================= */
+.card {
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    
+    /* Light glass effect */
+    background: var(--admin-glass-light);
+    backdrop-filter: var(--admin-blur);
+    -webkit-backdrop-filter: var(--admin-blur);
+    
+    border: 1px solid var(--admin-border);
+    box-shadow: var(--admin-shadow),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.719);
+    
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--admin-shadow-hover);
+    transform: translateY(-4px);
+}
+
+.card h2, .card h3 {
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================
+   5. TABLES - GLASS DESIGN
+   ========================================= */
+.table-custom {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    
+    /* Glass container */
+    background: var(--admin-glass-medium);
+    backdrop-filter: var(--admin-blur);
+    -webkit-backdrop-filter: var(--admin-blur);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--admin-border);
+}
+
+.table-custom thead {
+    background: var(--admin-secondary);
+    backdrop-filter: blur(10px);
+}
+
+.table-custom th {
+    padding: 16px;
+    text-align: left;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.table-custom td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(40, 54, 24, 0.08);
+    color: var(--admin-text);
+    font-size: 0.9rem;
+}
+
+.table-custom tr {
+    transition: all 0.2s ease;
+}
+
+.table-custom tbody tr:hover {
+    background: rgba(163, 197, 151, 0.15);
+    transform: scale(1.01);
+}
+
+.table-custom tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================================
+   6. BUTTONS - GLASS SYSTEM
+   ========================================= */
+.btn-sm {
+    padding: 8px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-primary {
+    background: var(--admin-primary);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(40, 54, 24, 0.3);
+}
+
+.btn-primary:hover {
+    background: rgba(40, 54, 24, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 54, 24, 0.4);
+}
+
+.btn-success {
+    background: rgba(42, 157, 143, 0.85);
+    color: white;
+    border: 1px solid rgba(42, 157, 143, 0.3);
+}
+
+.btn-success:hover {
+    background: rgba(42, 157, 143, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 157, 143, 0.4);
+}
+
+.btn-delete {
+    background: rgba(230, 57, 70, 0.85);
+    color: white;
+    border: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.btn-delete:hover {
+    background: rgba(230, 57, 70, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+}
+
+/* =========================================
+   7. FORMS - GLASS INPUT FIELDS
+   ========================================= */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--admin-primary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    
+    /* Glass effect */
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+    
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(163, 197, 151, 0.6);
+    box-shadow: 0 0 0 4px rgba(163, 197, 151, 0.15),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.form-control::placeholder {
+    color: var(--admin-text-light);
+    opacity: 0.7;
+}
+
+select.form-control {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23283618' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* =========================================
+   8. UTILITY CLASSES
+   ========================================= */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.mb-1 { margin-bottom: 10px; }
+.mb-2 { margin-bottom: 20px; }
+.mb-3 { margin-bottom: 30px; }
+.mt-1 { margin-top: 10px; }
+.mt-2 { margin-top: 20px; }
+.mt-3 { margin-top: 30px; }
+
+/* =========================================
+   9. DASHBOARD CARDS (Special Styles)
+   ========================================= */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    
+    /* Glass effect with color tints */
+    backdrop-filter: var(--admin-blur);
+    -webkit-backdrop-filter: var(--admin-blur);
+    border: 1px solid var(--admin-border);
+    box-shadow: var(--admin-shadow);
+    
+    transition: all 0.3s ease;
+}
+
+.stat-card:nth-child(1) {
+    background: rgba(211, 234, 202, 0.7); /* Mint green */
+}
+
+.stat-card:nth-child(2) {
+    background: rgba(226, 209, 185, 0.7); /* Orange */
+}
+
+.stat-card:nth-child(3) {
+    background: rgba(184, 204, 221, 0.7); /* Blue */
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--admin-shadow-hover);
+}
+
+.stat-card h4 {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* =========================================
+   10. ALERTS & NOTIFICATIONS
+   ========================================= */
+.alert {
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--admin-border);
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-success {
+    background: var(--success-glass);
+    color: #155724;
+    border-color: rgba(42, 157, 143, 0.3);
+}
+
+.alert-warning {
+    background: var(--warning-glass);
+    color: #856404;
+    border-color: rgba(230, 126, 34, 0.3);
+}
+
+.alert-danger {
+    background: var(--danger-glass);
+    color: #721c24;
+    border-color: rgba(230, 57, 70, 0.3);
+}
+
+/* =========================================
+   11. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 1024px) {
+    .admin-header .container {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .admin-nav {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .admin-nav a {
+        font-size: 0.8rem;
+        padding: 8px 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+        margin: 20px auto;
+    }
+    
+    .card {
+        padding: 20px;
+        border-radius: 16px;
+    }
+    
+    .table-custom {
+        font-size: 0.85rem;
+    }
+    
+    .table-custom th,
+    .table-custom td {
+        padding: 10px;
+    }
+    
+    .admin-brand {
+        font-size: 1.2rem;
+    }
+    
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   12. ANIMATIONS
+   ========================================= */
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.card {
+    animation: slideInFromTop 0.5s ease;
+}
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+
+/* =========================================
+   13. LOGIN PAGE SPECIFIC
+   ========================================= */
+.login-box {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 50px 40px;
+    border-radius: 24px;
+    text-align: center;
+    
+    /* Glass effect */
+    background: var(--admin-glass-light);
+    backdrop-filter: var(--admin-blur-heavy);
+    -webkit-backdrop-filter: var(--admin-blur-heavy);
+    border: 1px solid var(--admin-border);
+    box-shadow: 0 8px 40px rgba(24, 54, 45, 0.2),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+    
+    border-top: 5px solid var(--admin-primary);
+}
+
+.login-box h2 {
+    color: var(--admin-primary);
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+.error-msg {
+    background: rgba(230, 57, 70, 0.2);
+    color: #c62828;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 1rem;
+}

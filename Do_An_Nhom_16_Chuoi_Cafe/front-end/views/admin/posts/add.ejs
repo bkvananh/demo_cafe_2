@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viết Bài Mới - Catfe Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <%- include('../partials/header', { page: 'posts' }) %>
+
+    <div class="container">
+        <!-- Back Button & Title -->
+        <div style="margin-bottom: 30px;">
+            <a href="/admin/posts" style="display: inline-flex; align-items: center; gap: 8px; 
+                                          color: var(--admin-text-light); text-decoration: none; font-weight: 600; margin-bottom: 15px;">
+                <i class="fas fa-arrow-left"></i> Quay lại danh sách
+            </a>
+            <h2 style="color: var(--admin-text); font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">
+                <i class="fas fa-pen-nib"></i> Viết Bài Mới
+            </h2>
+            <p style="color: var(--admin-text-light); font-size: 0.9rem;">
+                Tạo bài viết tin tức hoặc khuyến mãi mới
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card" style="max-width: 900px; margin: 0 auto;">
+            <form action="/admin/posts/store" method="POST">
+                <!-- Title -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-heading"></i> Tiêu đề bài viết *
+                    </label>
+                    <input type="text" 
+                           name="title" 
+                           class="form-control" 
+                           placeholder="Nhập tiêu đề hấp dẫn..." 
+                           required>
+                </div>
+                
+                <!-- Type & Thumbnail Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-tag"></i> Loại tin *
+                        </label>
+                        <select name="type" class="form-control" required>
+                            <option value="event">📅 Sự kiện / Tin tức</option>
+                            <option value="promo">🎁 Khuyến mãi / Ưu đãi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-image"></i> Hình ảnh (URL) *
+                        </label>
+                        <input type="text" 
+                               name="thumbnail_url" 
+                               class="form-control" 
+                               placeholder="/img/posts/... hoặc https://..."
+                               required>
+                    </div>
+                </div>
+
+                <!-- Content - HTML Editor -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-align-left"></i> Nội dung bài viết (HTML)
+                    </label>
+                    <textarea name="content" 
+                              rows="12" 
+                              class="form-control" 
+                              placeholder="Nhập nội dung bài viết...
+                              
+Bạn có thể dùng HTML:
+<p>Đoạn văn bản</p>
+<b>Chữ đậm</b>
+<img src='link' alt='mô tả'>"></textarea>
+                    <small style="color: var(--admin-text-light); font-size: 0.85rem; display: block; margin-top: 8px;">
+                        <i class="fas fa-info-circle"></i> 
+                        Hỗ trợ thẻ HTML cơ bản như &lt;p&gt;, &lt;b&gt;, &lt;i&gt;, &lt;img&gt;, &lt;br&gt;
+                    </small>
+                </div>
+
+                <!-- Form Actions -->
+                <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; padding-top: 30px; 
+                            border-top: 1px solid rgba(40, 54, 24, 0.1);">
+                    <a href="/admin/posts" 
+                       style="padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;
+                              background: rgba(120, 120, 120, 0.2); color: var(--admin-text); 
+                              border: 1px solid rgba(120, 120, 120, 0.3); transition: all 0.3s;">
+                        <i class="fas fa-times"></i> Hủy
+                    </a>
+                    <button type="submit" class="btn-sm btn-primary" style="padding: 12px 40px;">
+                        <i class="fas fa-paper-plane"></i> Đăng Bài
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
