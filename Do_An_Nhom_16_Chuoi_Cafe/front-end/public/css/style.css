@@ -17,7 +17,7 @@
     /* === ACCENT COLORS === */
     --accent-green: rgba(40, 54, 24, 0.85);        /* Moss green - Strong text */
     --accent-green-hover: rgba(40, 54, 24, 0.95);  /* Darker on hover */
-    --accent-brown: rgba(147, 102, 57, 0.85);      /* Brown - Prices */
+    --accent-brown: rgba(255, 255, 255, 0.85);      /* Brown - Prices */
     --accent-mint: rgba(163, 197, 151, 0.30);      /* Mint - Fresh highlights */
     --accent-sage: rgba(127, 167, 116, 0.25);      /* Sage - Gradients */
     
